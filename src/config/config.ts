@@ -7,5 +7,6 @@ export const IPAddress =
   process.env.LIVE_MODE === "true"
     ? "https://alumnigrid.com"
     : "http://localhost:3000";
-export const BackendURL = `${IPAddress}:${Port}`;
+console.log(IPAddress);
+export const BackendURL = `${IPAddress}`;
 export const FrontendURL = `${IPAddress}`;

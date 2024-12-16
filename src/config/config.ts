@@ -5,7 +5,7 @@ export const APIUrl = "https://api.balldontlie.io/nfl/v1/players";
 export const Port = 5000;
 export const IPAddress =
   process.env.LIVE_MODE === "true"
-    ? "http://147.182.188.81"
-    : "http://localhost";
+    ? "https://alumnigrid.com"
+    : "http://localhost:3000";
 export const BackendURL = `${IPAddress}:${Port}`;
-export const FrontendURL = `${IPAddress}:3000`;
+export const FrontendURL = `${IPAddress}`;

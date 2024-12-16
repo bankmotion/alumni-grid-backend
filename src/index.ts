@@ -7,7 +7,7 @@ import routes from "./routes";
 
 const app = express();
 
-app.use(cors({ origin: FrontendURL }));
+app.use(cors({ origin: [FrontendURL, `www.${FrontendURL}`] }));
 
 app.use(express.json());
 

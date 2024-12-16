@@ -13,3 +13,4 @@ export const BackendURL =
     ? "https://backend.alumnigrid.com"
     : "http://localhost:5000";
 export const FrontendURL = `${IPAddress}`;
+export const WWWFrontendURL = `https://www.alumnigrid.com`;

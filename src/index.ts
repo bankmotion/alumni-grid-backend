@@ -2,12 +2,12 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import sequelize from "./config/db";
-import { BackendURL, FrontendURL, Port } from "./config/config";
+import { BackendURL, FrontendURL, Port, WWWFrontendURL } from "./config/config";
 import routes from "./routes";
 
 const app = express();
 
-app.use(cors({ origin: [FrontendURL, `www.${FrontendURL}`] }));
+app.use(cors({ origin: [FrontendURL, WWWFrontendURL] }));
 
 app.use(express.json());
 

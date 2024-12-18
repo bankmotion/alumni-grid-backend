@@ -4,13 +4,10 @@ import {
   getPlayerDataByID,
   getRandPlayerInfo,
 } from "../service/playersService";
-import { PlayType } from "../config/constant";
 
 export const getColleges = async (req: Request, res: Response) => {
   try {
-    const { type } = req.params;
-    console.log(type);
-    const data = await getAllColleges(Number(type));
+    const data = await getAllColleges(0);
 
     res.status(200).json({ status: 200, colleges: data });
   } catch (err) {
@@ -21,8 +18,7 @@ export const getColleges = async (req: Request, res: Response) => {
 
 export const getRandPlayerNames = async (req: Request, res: Response) => {
   try {
-    const { type } = req.params;
-    const data = await getRandPlayerInfo(Number(type));
+    const data = await getRandPlayerInfo(0);
 
     res.status(200).json({ status: 200, data });
   } catch (err) {

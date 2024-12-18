@@ -32,7 +32,7 @@ export const getAllColleges = async (playType: PlayType) => {
   return data;
 };
 
-export const getRandPlayerInfo = async (playType: PlayType) => {
+export const getRandPlayerInfo = async (playType: PlayType = 0) => {
   const model = getModelFromPlayType(playType);
 
   let data: NBAPlayer[] | NFLPlayer[] = [];
@@ -59,7 +59,7 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
 
 export const getPlayerDataByID = async (id: number, type: PlayType) => {
   const model = getModelFromPlayType(type);
-  console.log(model)
+  console.log(model);
 
   if (model) {
     const data = await model.findOne({

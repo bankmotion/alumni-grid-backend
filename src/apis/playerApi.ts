@@ -7,9 +7,9 @@ import {
 
 const router = express.Router();
 
-router.get("/colleges/:type", getColleges);
+router.get("/colleges", getColleges);
 
-router.get("/randplayer/:type", getRandPlayerNames);
+router.get("/randplayer", getRandPlayerNames);
 
 router.post("/college", identifyingCollege);
 

@@ -8,3 +8,5 @@ export const LocalFrontendURL = "http://localhost:3000";
 export const WWWFrontendURL = `https://www.alumnigrid.com`;
 export const LiveBackendURL = "https://backend.alumnigrid.com";
 export const LocalBackendURL = "http://localhost:5000";
+
+export const GameDuration = 24 * 3600;

@@ -3,14 +3,8 @@ dotenv.config();
 
 export const APIUrl = "https://api.balldontlie.io/nfl/v1/players";
 export const Port = 5000;
-export const IPAddress =
-  process.env.LIVE_MODE === "true"
-    ? "https://alumnigrid.com"
-    : "http://localhost:3000";
-console.log(IPAddress);
-export const BackendURL =
-  process.env.LIVE_MODE === "true"
-    ? "https://backend.alumnigrid.com"
-    : "http://localhost:5000";
-export const FrontendURL = `${IPAddress}`;
+export const LiveFrontendURL = "https://alumnigrid.com";
+export const LocalFrontendURL = "http://localhost:3000";
 export const WWWFrontendURL = `https://www.alumnigrid.com`;
+export const LiveBackendURL = "https://backend.alumnigrid.com";
+export const LocalBackendURL = "http://localhost:5000";

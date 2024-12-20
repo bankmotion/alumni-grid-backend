@@ -31,8 +31,9 @@ export const getRandPlayerNames = async (req: Request, res: Response) => {
 
 export const identifyingCollege = async (req: Request, res: Response) => {
   try {
-    const { id, college, type } = req.body;
-    const data = await getPlayerDataByID(id, Number(type));
+    const { id, college } = req.body;
+    const data = await getPlayerDataByID(id);
+    console.log(data)
     if (data?.dataValues.college === college) {
       res.status(200).json({ status: 200, message: true });
     } else {

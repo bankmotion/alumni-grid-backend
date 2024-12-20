@@ -57,7 +57,7 @@ export const getRandPlayerInfo = async (playType: PlayType = 0) => {
   return resArr;
 };
 
-export const getPlayerDataByID = async (id: number, type: PlayType) => {
+export const getPlayerDataByID = async (id: number, type: PlayType = 0) => {
   const model = getModelFromPlayType(type);
   console.log(model);
 

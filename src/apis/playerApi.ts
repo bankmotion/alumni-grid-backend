@@ -14,6 +14,6 @@ router.get("/randplayer", getRandPlayerNames);
 
 router.post("/college", identifyingCollege);
 
-router.post("/:id", getPlayerInfo);
+router.get("/:id", getPlayerInfo);
 
 export default router;

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getColleges,
+  getPlayerInfo,
   getRandPlayerNames,
   identifyingCollege,
 } from "../controller/playersController";
@@ -12,5 +13,7 @@ router.get("/colleges", getColleges);
 router.get("/randplayer", getRandPlayerNames);
 
 router.post("/college", identifyingCollege);
+
+router.post("/:id", getPlayerInfo);
 
 export default router;

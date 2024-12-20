@@ -49,8 +49,8 @@ export const identifyingCollege = async (req: Request, res: Response) => {
 
 export const getPlayerInfo = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body;
-    const data = await getPlayerDataByID(id);
+    const { id } = req.params;
+    const data = await getPlayerDataByID(Number(id));
     res.status(200).json({ status: 200, data });
   } catch (err) {
     console.error(`playerController~getPlayerInfo() => ${err}`);

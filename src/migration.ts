@@ -38,7 +38,7 @@ const fetchAndMigrate = async () => {
 
     //       const player = {
     //         id: playerData.id,
-    //         firstName: playerData.last_name,
+    //         firstName: playerData.first_name,
     //         lastName: playerData.last_name,
     //         position: playerData.position,
     //         positionAbbreviation: playerData.position_abbreviation,
@@ -84,7 +84,7 @@ const fetchAndMigrate = async () => {
 
           const player = {
             id: playerData.id,
-            firstName: playerData.last_name,
+            firstName: playerData.first_name,
             lastName: playerData.last_name,
             position: playerData.position,
             height: playerData.height,

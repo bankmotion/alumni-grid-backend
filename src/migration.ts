@@ -19,54 +19,8 @@ const fetchAndMigrate = async () => {
 
     await syncDatabase();
 
-    // while (true) {
-    //   const response = await api.nfl.getPlayers({ cursor, per_page: perPage });
-
-    //   await sequelize.transaction(async (transaction) => {
-    //     for (const playerData of response.data) {
-    //       const teamData = {
-    //         id: playerData.team.id,
-    //         conference: playerData.team.conference,
-    //         division: playerData.team.division,
-    //         location: playerData.team.location,
-    //         name: playerData.team.name,
-    //         fullName: playerData.team.full_name,
-    //         abbreviation: playerData.team.abbreviation,
-    //       };
-
-    //       const [team] = await NFLTeam.upsert(teamData, { transaction });
-
-    //       const player = {
-    //         id: playerData.id,
-    //         firstName: playerData.first_name,
-    //         lastName: playerData.last_name,
-    //         position: playerData.position,
-    //         positionAbbreviation: playerData.position_abbreviation,
-    //         height: playerData.height,
-    //         weight: playerData.weight,
-    //         jerseyNumber: playerData.jersey_number,
-    //         college: playerData.college,
-    //         experience: playerData.experience,
-    //         age: playerData.age,
-    //         teamId: team.dataValues.id,
-    //       };
-
-    //       await NFLPlayer.create(player, { transaction });
-    //     }
-    //   });
-
-    //   console.log(response.data?.length);
-
-    //   if (!response.meta || !response.meta.next_cursor) {
-    //     break;
-    //   }
-
-    //   cursor = response.meta.next_cursor;
-    // }
-
     while (true) {
-      await delay(5);
-      const response = await api.nba.getPlayers({ cursor, per_page: perPage });
+      const response = await api.nfl.getPlayers({ cursor, per_page: perPage });
 
       await sequelize.transaction(async (transaction) => {
         for (const playerData of response.data) {
@@ -74,31 +28,30 @@ const fetchAndMigrate = async () => {
             id: playerData.team.id,
             conference: playerData.team.conference,
             division: playerData.team.division,
-            city: playerData.team.city,
+            location: playerData.team.location,
             name: playerData.team.name,
             fullName: playerData.team.full_name,
             abbreviation: playerData.team.abbreviation,
           };
 
-          const [team] = await NBATeam.upsert(teamData, { transaction });
+          const [team] = await NFLTeam.upsert(teamData, { transaction });
 
           const player = {
             id: playerData.id,
             firstName: playerData.first_name,
             lastName: playerData.last_name,
             position: playerData.position,
+            positionAbbreviation: playerData.position_abbreviation,
             height: playerData.height,
             weight: playerData.weight,
             jerseyNumber: playerData.jersey_number,
             college: playerData.college,
-            country: playerData.country,
-            draftYear: playerData.draft_year,
-            draftRound: playerData.draft_round,
-            draftNumber: playerData.draft_number,
+            experience: playerData.experience,
+            age: playerData.age,
             teamId: team.dataValues.id,
           };
 
-          await NBAPlayer.create(player, { transaction });
+          await NFLPlayer.create(player, { transaction });
         }
       });
 
@@ -110,6 +63,53 @@ const fetchAndMigrate = async () => {
 
       cursor = response.meta.next_cursor;
     }
+
+    // while (true) {
+    //   await delay(5);
+    //   const response = await api.nba.getPlayers({ cursor, per_page: perPage });
+
+    //   await sequelize.transaction(async (transaction) => {
+    //     for (const playerData of response.data) {
+    //       const teamData = {
+    //         id: playerData.team.id,
+    //         conference: playerData.team.conference,
+    //         division: playerData.team.division,
+    //         city: playerData.team.city,
+    //         name: playerData.team.name,
+    //         fullName: playerData.team.full_name,
+    //         abbreviation: playerData.team.abbreviation,
+    //       };
+
+    //       const [team] = await NBATeam.upsert(teamData, { transaction });
+
+    //       const player = {
+    //         id: playerData.id,
+    //         firstName: playerData.first_name,
+    //         lastName: playerData.last_name,
+    //         position: playerData.position,
+    //         height: playerData.height,
+    //         weight: playerData.weight,
+    //         jerseyNumber: playerData.jersey_number,
+    //         college: playerData.college,
+    //         country: playerData.country,
+    //         draftYear: playerData.draft_year,
+    //         draftRound: playerData.draft_round,
+    //         draftNumber: playerData.draft_number,
+    //         teamId: team.dataValues.id,
+    //       };
+
+    //       await NBAPlayer.create(player, { transaction });
+    //     }
+    //   });
+
+    //   console.log(response.data?.length);
+
+    //   if (!response.meta || !response.meta.next_cursor) {
+    //     break;
+    //   }
+
+    //   cursor = response.meta.next_cursor;
+    // }
   } catch (err) {
     console.error(`Error during migration: `, err);
   } finally {

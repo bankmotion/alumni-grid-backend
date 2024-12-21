@@ -20,6 +20,7 @@ const fetchAndMigrate = async () => {
     await syncDatabase();
 
     while (true) {
+      await delay(5);
       const response = await api.nfl.getPlayers({ cursor, per_page: perPage });
 
       await sequelize.transaction(async (transaction) => {

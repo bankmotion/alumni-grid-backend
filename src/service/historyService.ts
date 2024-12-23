@@ -42,4 +42,6 @@ export const getAllHistorySer = async () => {
       attributes: ["id", "firstName", "lastName"],
     },
   });
+
+  return data;
 };

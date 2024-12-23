@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/", getPlayers);
 
-router.get("/:timestamp", getPlayersByTimeStamp);
+router.get("/timestamp/:timestamp", getPlayersByTimeStamp);
 
 router.get("/all", getAllHistory);
 

@@ -32,7 +32,9 @@ export const getPlayersByTimeStamp = async (req: Request, res: Response) => {
     const { timestamp } = req.params;
     const curTimestamp = getStartTimeByTimestampDaily(Number(timestamp));
 
+    console.log(curTimestamp)
     const data = await getGameData(curTimestamp);
+    console.log(data)
 
     res.status(200).json({ status: 200, data, timestamp: curTimestamp });
   } catch (err) {

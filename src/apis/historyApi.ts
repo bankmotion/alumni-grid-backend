@@ -1,5 +1,5 @@
 import express from "express";
-import { getPlayers } from "../controller/historyController";
+import { getAllHistory, getPlayers } from "../controller/historyController";
 
 const router = express.Router();
 

@@ -36,7 +36,50 @@ export const getGameData = async (timestamp: number) => {
 };
 
 export const getAllHistorySer = async () => {
-  const data = await History.findAll({ group: ["timestamp"] });
+  const data = await History.findAll({
+    include: {
+      model: NBAPlayer,
+      attributes: ["id", "firstName", "lastName"],
+    },
+    raw: true,
+  });
+
+  console.log(data);
+
+  let results: {
+    timestamp: number;
+    players: {
+      id: number;
+      firstName: string;
+      lastName: string;
+    }[];
+  }[] = [];
+
+  for (let index = 0; index < data.length; index++) {
+    const dat = data[index] as any;
+
+    if (!results.some((item) => item.timestamp === dat.timestamp)) {
+      results.push({
+        timestamp: dat.timestamp,
+        players: [],
+      });
+    }
+
+    results = results.map((result) => {
+      if (result.timestamp !== dat.timestamp) return result;
+
+      const updatedRes = { ...result };
+      updatedRes.players.push({
+        id: dat["NBAPlayer.id"],
+        firstName: dat["NBAPlayer.firstName"],
+        lastName: dat["NBAPlayer.lastName"],
+      });
+
+      return updatedRes;
+    });
+
+  }
+  console.log(results);
 
   return data;
 };

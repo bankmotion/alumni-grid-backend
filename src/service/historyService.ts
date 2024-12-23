@@ -81,5 +81,5 @@ export const getAllHistorySer = async () => {
   }
   console.log(results);
 
-  return data;
+  return results;
 };

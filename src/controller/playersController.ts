@@ -16,9 +16,13 @@ export const getColleges = async (req: Request, res: Response) => {
   }
 };
 
-export const getRandPlayerNames = async (req: Request, res: Response) => {
+export const getRandPlayerNamesByTimestamp = async (
+  req: Request,
+  res: Response
+) => {
   try {
-    const data = await getRandPlayerInfo(0);
+    const { timestamp } = req.params;
+    const data = await getRandPlayerInfo(0, Number(timestamp));
 
     res.status(200).json({ status: 200, data });
   } catch (err) {

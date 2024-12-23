@@ -1,9 +1,15 @@
 import express from "express";
-import { getAllHistory, getPlayers } from "../controller/historyController";
+import {
+  getAllHistory,
+  getPlayers,
+  getPlayersByTimeStamp,
+} from "../controller/historyController";
 
 const router = express.Router();
 
 router.get("/", getPlayers);
+
+router.get("/:timestamp", getPlayersByTimeStamp);
 
 router.get("/all", getAllHistory);
 

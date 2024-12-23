@@ -1,6 +1,7 @@
 import { GameDuration } from "../config/config";
 import History from "../models/History";
 import NBAPlayer from "../models/NBAPlayers";
+import { getStartTimeByTimestampDaily } from "../utils/utils";
 import { getRandPlayerInfo } from "./playersService";
 
 export const getLatestTimestamp = async () => {
@@ -8,9 +9,8 @@ export const getLatestTimestamp = async () => {
   return Number(latestTimestamp);
 };
 
-export const createNewGame = async () => {
-  const currentTime = Math.floor(new Date().getTime() / 1000);
-  const startTime = Math.floor(currentTime / GameDuration) * GameDuration;
+export const createNewGame = async (timestamp: number = 0) => {
+  const startTime = getStartTimeByTimestampDaily(timestamp);
 
   const data = await getRandPlayerInfo();
   for (const dat of data) {
@@ -44,8 +44,6 @@ export const getAllHistorySer = async () => {
     raw: true,
   });
 
-  console.log(data);
-
   let results: {
     timestamp: number;
     players: {
@@ -77,9 +75,7 @@ export const getAllHistorySer = async () => {
 
       return updatedRes;
     });
-
   }
-  console.log(results);
 
   return results;
 };

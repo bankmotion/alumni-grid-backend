@@ -39,7 +39,7 @@ export const getAllHistorySer = async () => {
   const data = await History.findAll({
     include: {
       model: NBAPlayer,
-      attributes: ["id", "firstName", "lastName", "timestamp"],
+      attributes: ["id", "firstName", "lastName"],
     },
   });
 };

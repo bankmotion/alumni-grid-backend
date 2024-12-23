@@ -3,6 +3,7 @@ import {
   createNewGame,
   getGameData,
   getLatestTimestamp,
+  getAllHistorySer,
 } from "../service/historyService";
 import { GameDuration } from "../config/config";
 
@@ -24,5 +25,18 @@ export const getPlayers = async (req: Request, res: Response) => {
     res
       .status(500)
       .json({ status: 500, message: "Failed to get getPlayerHistory" });
+  }
+};
+
+export const getAllHistory = async (req: Request, res: Response) => {
+  try {
+    const data = await getAllHistorySer();
+
+    res.status(200).json({ status: 200, data });
+  } catch (err) {
+    console.error(`historyController~getAllHistory() => ${err}`);
+    res
+      .status(500)
+      .json({ status: 500, message: "Failed to get getAllHistory()" });
   }
 };

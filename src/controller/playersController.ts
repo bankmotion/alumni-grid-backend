@@ -16,23 +16,6 @@ export const getColleges = async (req: Request, res: Response) => {
   }
 };
 
-export const getRandPlayerNamesByTimestamp = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    const { timestamp } = req.params;
-    const data = await getRandPlayerInfo(0, Number(timestamp));
-
-    res.status(200).json({ status: 200, data });
-  } catch (err) {
-    console.error(`playersController~getRandPlayerNames() => ${err}`);
-    res
-      .status(500)
-      .json({ status: 500, message: "Failed to get randplayernames" });
-  }
-};
-
 export const identifyingCollege = async (req: Request, res: Response) => {
   try {
     const { id, college } = req.body;

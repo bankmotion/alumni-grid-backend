@@ -36,12 +36,7 @@ export const getGameData = async (timestamp: number) => {
 };
 
 export const getAllHistorySer = async () => {
-  const data = await History.findAll({
-    include: {
-      model: NBAPlayer,
-      attributes: ["id", "firstName", "lastName"],
-    },
-  });
+  const data = await History.findAll({ group: ["timestamp"] });
 
   return data;
 };

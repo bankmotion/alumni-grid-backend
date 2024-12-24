@@ -12,8 +12,8 @@ export const getStartTimeByTimestampDaily = (timestamp: number) => {
   const currentTime =
     timestamp === 0 ? Math.floor(new Date().getTime() / 1000) : timestamp;
 
-  // const pstOffset = 8 * 3600;
-  const pstOffset = 0;
+  const pstOffset = 8 * 3600;
+  // const pstOffset = 0;
 
   const startTime =
     Math.floor(currentTime / GameDuration) * GameDuration - pstOffset;

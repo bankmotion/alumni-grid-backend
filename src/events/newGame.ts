@@ -8,8 +8,9 @@ const createNewGameDaily = async () => {
 
     const nowTime = Math.floor(new Date().getTime() / 1000);
     const nowGameTime = getStartTimeByTimestampDaily(nowTime);
+    console.log({nowGameTime, latestTime})
 
-    while (nowGameTime <= latestTime) {
+    while (nowGameTime > latestTime) {
       await createNewGame(latestTime);
       latestTime += GameDuration;
     }
@@ -23,17 +24,17 @@ const createNewGameDaily = async () => {
 };
 
 export const createNewGameEvent = async () => {
-  try {
-    const scheduleNextTime = async () => {
+  // try {
+    // const scheduleNextTime = async () => {
       const remainTime = await createNewGameDaily();
 
-      setTimeout(async () => {
-        await scheduleNextTime();
-      }, 1000 * remainTime);
-    };
+    //   setTimeout(async () => {
+    //     await scheduleNextTime();
+    //   }, 1000 * remainTime);
+    // };
 
-    await scheduleNextTime();
-  } catch (err) {
-    console.error("Error in createNewGameEvent:", err);
-  }
+    // await scheduleNextTime();
+  // } catch (err) {
+  //   console.error("Error in createNewGameEvent:", err);
+  // }
 };

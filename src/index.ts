@@ -12,6 +12,7 @@ import {
 } from "./config/config";
 import routes from "./routes";
 import dotenv from "dotenv";
+import { createNewGameEvent } from "./events/newGame";
 dotenv.config();
 
 const app = express();
@@ -39,6 +40,8 @@ const startServer = async () => {
           process.env.LIVE_MODE === "true" ? LiveBackendURL : LocalBackendURL
         }`
       );
+
+      createNewGameEvent();
     });
   } catch (err) {
     console.error(`Error synchronizing the database: ${err}`);

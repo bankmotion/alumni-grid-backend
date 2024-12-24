@@ -1,11 +1,12 @@
-import { GameDuration } from "../config/config";
+import { GameDuration, StartTimeStamp } from "../config/config";
 import History from "../models/History";
 import NBAPlayer from "../models/NBAPlayers";
 import { getStartTimeByTimestampDaily } from "../utils/utils";
 import { getRandPlayerInfo } from "./playersService";
 
 export const getLatestTimestamp = async () => {
-  const latestTimestamp = await History.max("timestamp");
+  let latestTimestamp = await History.max("timestamp");
+  if (!latestTimestamp) latestTimestamp = StartTimeStamp;
   return Number(latestTimestamp);
 };
 

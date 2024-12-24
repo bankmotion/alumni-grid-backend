@@ -25,17 +25,19 @@ const createNewGameDaily = async () => {
 };
 
 export const createNewGameEvent = async () => {
-  // try {
-    // const scheduleNextTime = async () => {
+  try {
+    const scheduleNextTime = async () => {
       const remainTime = await createNewGameDaily();
 
-    //   setTimeout(async () => {
-    //     await scheduleNextTime();
-    //   }, 1000 * remainTime);
-    // };
+      console.log({remainTime})
 
-    // await scheduleNextTime();
-  // } catch (err) {
-  //   console.error("Error in createNewGameEvent:", err);
-  // }
+      setTimeout(async () => {
+        await scheduleNextTime();
+      }, 1000 * remainTime);
+    };
+
+    await scheduleNextTime();
+  } catch (err) {
+    console.error("Error in createNewGameEvent:", err);
+  }
 };

@@ -9,13 +9,13 @@ export const getRandNumber = (min: number, max: number) => {
 };
 
 export const getStartTimeByTimestampDaily = (timestamp: number) => {
-  const currentTime =
-    timestamp === 0 ? Math.floor(new Date().getTime() / 1000) : timestamp;
+  const currentTime = timestamp === 0 ? new Date() : new Date(timestamp * 1000);
 
-  const pstOffset = 8 * 3600;
-  // const pstOffset = 0;
+  const utcTime = currentTime.getTime();
 
-  const startTime =
-    Math.floor(currentTime / GameDuration) * GameDuration - pstOffset;
-  return startTime;
+  const pstOffset = -8 * 3600 * 1000;
+  const pstDate = new Date(utcTime + pstOffset);
+  pstDate.setUTCHours(0, 0, 0, 0);
+
+  return Math.floor((pstDate.getTime() - pstOffset) / 1000);
 };

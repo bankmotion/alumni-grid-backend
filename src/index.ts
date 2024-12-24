@@ -12,7 +12,7 @@ import {
 } from "./config/config";
 import routes from "./routes";
 import dotenv from "dotenv";
-import { createNewGameEvent } from "./events/newGame";
+import { createNewGameEvent } from "./events/newGameEvent";
 dotenv.config();
 
 const app = express();

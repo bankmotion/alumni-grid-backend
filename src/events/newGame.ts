@@ -8,14 +8,15 @@ const createNewGameDaily = async () => {
 
     const nowTime = Math.floor(new Date().getTime() / 1000);
     const nowGameTime = getStartTimeByTimestampDaily(nowTime);
-    console.log({nowGameTime, latestTime})
+    console.log({nowTime, nowGameTime, latestTime})
 
-    while (nowGameTime > latestTime) {
+    while (nowGameTime >= latestTime) {
+      console.log({latestTime})
       await createNewGame(latestTime);
       latestTime += GameDuration;
     }
 
-    const remainTime = (await getLatestTimestamp()) + GameDuration;
+    const remainTime = latestTime - nowTime;
     return remainTime;
   } catch (err) {
     console.error(`Error in createnewGameDaily event: ${err}`);

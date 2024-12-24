@@ -10,18 +10,16 @@ export const getLatestTimestamp = async () => {
   return Number(latestTimestamp);
 };
 
-export const createNewGame = async (timestamp: number = 0) => {
-  const startTime = getStartTimeByTimestampDaily(timestamp);
-
+export const createNewGame = async (timestamp: number) => {
   const data = await getRandPlayerInfo();
   for (const dat of data) {
     await History.create({
       playerId: dat.dataValues.id,
-      timestamp: startTime,
+      timestamp,
     });
   }
 
-  return startTime;
+  return timestamp;
 };
 
 export const getGameData = async (timestamp: number) => {

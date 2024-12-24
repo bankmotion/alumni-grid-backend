@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import {
-  createNewGame,
   getGameData,
-  getLatestTimestamp,
   getAllHistorySer,
 } from "../service/historyService";
 import { GameDuration } from "../config/config";

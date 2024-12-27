@@ -11,3 +11,4 @@ export const LocalBackendURL = "http://localhost:5000";
 
 export const GameDuration = 24 * 3600;
 export const StartTimeStamp = 1733040000
+export const Password = "alumnipassword"

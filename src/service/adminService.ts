@@ -1,3 +1,4 @@
+import { PlayType } from "../config/constant";
 import { SettingType } from "../interface";
 import Setting, { SettingAttributes } from "../models/Setting";
 
@@ -30,7 +31,7 @@ export const deleteSettingById = async (settingId: number) => {
   return true;
 };
 
-export const getSettings = async () => {
-  const data = await Setting.findAll();
+export const getSettings = async (type: PlayType) => {
+  const data = await Setting.findAll({ where: { type } });
   return data;
 };

@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getAllPlayerList,
   getColleges,
   getPlayerInfo,
   identifyingCollege,
@@ -12,5 +13,7 @@ router.get("/colleges", getColleges);
 router.post("/college", identifyingCollege);
 
 router.get("/:id", getPlayerInfo);
+
+router.get("/all/:type", getAllPlayerList);
 
 export default router;

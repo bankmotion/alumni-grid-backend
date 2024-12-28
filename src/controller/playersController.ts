@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import {
   getAllColleges,
+  getAllPlayerListByType,
   getPlayerDataByID,
   getRandPlayerInfo,
 } from "../service/playersService";
+import { PlayType } from "../config/constant";
 
 export const getColleges = async (req: Request, res: Response) => {
   try {
@@ -42,5 +44,18 @@ export const getPlayerInfo = async (req: Request, res: Response) => {
   } catch (err) {
     console.error(`playerController~getPlayerInfo() => ${err}`);
     res.status(500).json({ status: 500, message: "Failed to get player info" });
+  }
+};
+
+export const getAllPlayerList = async (req: Request, res: Response) => {
+  try {
+    const { type } = req.params;
+    const data = await getAllPlayerListByType(Number(type) as PlayType);
+    res.status(200).json({ status: 200, data });
+  } catch (err) {
+    console.error(`playerController ~ getAllPlayerList() => ${err}`);
+    res
+      .status(500)
+      .json({ status: 500, message: "Failed to get all player list" });
   }
 };

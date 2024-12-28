@@ -7,9 +7,9 @@ import {
 
 const router = express.Router();
 
-router.get("/", getSetting);
+router.get("/:type", getSetting);
 
-router.post("/", createOrUpdateSetting);
+router.post("/:type", createOrUpdateSetting);
 
 router.delete("/:id", deleteSetting);
 

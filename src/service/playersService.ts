@@ -69,3 +69,23 @@ export const getPlayerDataByID = async (id: number, type: PlayType = 0) => {
   }
   return null;
 };
+
+export const getAllPlayerListByType = async (type: PlayType) => {
+  const model = getModelFromPlayType(type);
+
+  if (model) {
+    const data = await model.findAll({
+      where: {
+        firstName: {
+          [Op.not]: null as any,
+        },
+        lastName: {
+          [Op.not]: null as any,
+        },
+      },
+    });
+
+    return data;
+  }
+  return null;
+};

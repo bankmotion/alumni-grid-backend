@@ -6,5 +6,6 @@ export interface SettingType {
   position?: string;
   country?: string;
   draft?: number;
-  college?: string;
+  experience?: string;
+  age?: number;
 }

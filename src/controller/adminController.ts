@@ -10,7 +10,7 @@ import {
 
 export const createOrUpdateSetting = async (req: Request, res: Response) => {
   try {
-    const { id, position, country, draft, college } = req.body;
+    const { id, position, country, draft, experience, age } = req.body;
     const { type } = req.params;
 
     const data: SettingType = { type: Number(type) };
@@ -18,7 +18,8 @@ export const createOrUpdateSetting = async (req: Request, res: Response) => {
     if (position) data.position = position;
     if (country) data.country = country;
     if (draft) data.draft = draft;
-    if (college) data.college = college;
+    if (experience) data.experience = experience;
+    if (age) data.age = Number(age);
 
     if (data.id && data.id >= 0) {
       await updateSetting(data);

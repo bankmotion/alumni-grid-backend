@@ -9,8 +9,8 @@ export const getModelFromPlayType = (playType: PlayType) => {
   return playType === PlayType.NBA
     ? NBAPlayer
     : playType === PlayType.NFL
-      ? NFLPlayer
-      : null;
+    ? NFLPlayer
+    : null;
 };
 
 export const getAllColleges = async (playType: PlayType) => {
@@ -43,6 +43,7 @@ export const getRandPlayerInfo = async (playType: PlayType = 0) => {
   if (model) {
     data = await model.findAll({
       attributes: ["id", "firstName", "lastName"],
+      where: { status: 1 },
     });
     const dataCount = data.length;
 
@@ -90,7 +91,6 @@ export const getAllPlayerListByType = async (type: PlayType) => {
   }
   return null;
 };
-
 
 // export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
 
@@ -217,7 +217,6 @@ export const getAllPlayerListByType = async (type: PlayType) => {
 // };
 
 export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
-
   // Parse settings and filter out invalid ones
   const settings = allSettings
     .map((setting) =>
@@ -234,7 +233,7 @@ export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
       status: 0,
     },
     {
-      where: {} // No condition, update all records
+      where: {}, // No condition, update all records
     }
   );
 
@@ -245,7 +244,7 @@ export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
       status: 0,
     },
     {
-      where: {} // No condition, update all records
+      where: {}, // No condition, update all records
     }
   );
 
@@ -273,7 +272,9 @@ export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
       continue;
     }
 
-    console.log(`Model found for playType: ${playType}. Proceed with updating logic.`);
+    console.log(
+      `Model found for playType: ${playType}. Proceed with updating logic.`
+    );
 
     // Prepare conditions
     const countryCondition =
@@ -332,17 +333,12 @@ export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
           conditions.age = { [Op.between]: [ageFrom, ageTo] };
         }
 
-        const result = await model.update(
-          { status: 1 },
-          { where: conditions }
-        );
+        const result = await model.update({ status: 1 }, { where: conditions });
 
         console.log(`Update successful for playType: ${playType}`, result);
       }
-
     } catch (error) {
       console.error(`Error updating players for playType: ${playType}`, error);
     }
   }
 };
-

@@ -3,13 +3,12 @@ import {
   getAllColleges,
   getAllPlayerListByType,
   getPlayerDataByID,
-  getRandPlayerInfo,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";
 
 export const getColleges = async (req: Request, res: Response) => {
   try {
-    const data = await getAllColleges(0);
+    const data = await getAllColleges();
 
     res.status(200).json({ status: 200, colleges: data });
   } catch (err) {
@@ -20,8 +19,8 @@ export const getColleges = async (req: Request, res: Response) => {
 
 export const identifyingCollege = async (req: Request, res: Response) => {
   try {
-    const { id, college } = req.body;
-    const data = await getPlayerDataByID(id);
+    const { id, college, type } = req.body;
+    const data = await getPlayerDataByID(id, type);
     console.log(data);
     if (data?.dataValues.college === college) {
       res.status(200).json({ status: 200, message: true });
@@ -38,8 +37,8 @@ export const identifyingCollege = async (req: Request, res: Response) => {
 
 export const getPlayerInfo = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const data = await getPlayerDataByID(Number(id));
+    const { id, type } = req.params;
+    const data = await getPlayerDataByID(Number(id), Number(type));
     res.status(200).json({ status: 200, data });
   } catch (err) {
     console.error(`playerController~getPlayerInfo() => ${err}`);

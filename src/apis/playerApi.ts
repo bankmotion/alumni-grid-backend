@@ -12,7 +12,7 @@ router.get("/colleges", getColleges);
 
 router.post("/college", identifyingCollege);
 
-router.get("/:id", getPlayerInfo);
+router.get("/:id/:type", getPlayerInfo);
 
 router.get("/all/:type", getAllPlayerList);
 

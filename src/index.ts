@@ -17,9 +17,9 @@ dotenv.config();
 
 const app = express();
 
-// app.use(cors({ origin: [LiveFrontendURL, LocalFrontendURL, WWWFrontendURL] }));
+app.use(cors({ origin: [LiveFrontendURL, LocalFrontendURL, WWWFrontendURL] }));
 
-app.use(cors());
+// app.use(cors());
 
 app.use(express.json());
 

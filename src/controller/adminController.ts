@@ -6,11 +6,14 @@ import {
   deleteSettingById,
   getSettings,
   updateSetting,
+  getAllSettings
 } from "../service/adminService";
+import {updateStatusOfPlayers}  from "../service/playersService"
+import { all } from "axios";
 
 export const createOrUpdateSetting = async (req: Request, res: Response) => {
   try {
-    const { id, position, country, draft, experience, age } = req.body;
+    const { id, position, country, draft, experience, ageTo, ageFrom } = req.body;
     const { type } = req.params;
 
     const data: SettingType = { type: Number(type) };
@@ -19,13 +22,19 @@ export const createOrUpdateSetting = async (req: Request, res: Response) => {
     if (country) data.country = country;
     if (draft) data.draft = draft;
     if (experience) data.experience = experience;
-    if (age) data.age = Number(age);
+    if (ageTo) data.ageTo = Number(ageTo);
+    if (ageFrom) data.ageFrom = Number(ageFrom);
 
     if (data.id && data.id >= 0) {
       await updateSetting(data);
     } else {
       await createNewSetting(data);
     }
+
+    const allSettings = await getAllSettings();
+
+    console.log(allSettings,"allSettings")
+    await updateStatusOfPlayers(allSettings);
 
     res.status(200).json({ status: 200 });
   } catch (err) {
@@ -40,6 +49,9 @@ export const deleteSetting = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     await deleteSettingById(Number(id));
+
+    const allSettings = await getAllSettings();
+    await updateStatusOfPlayers(allSettings);
 
     res.status(200).json({ status: 200 });
   } catch (err) {

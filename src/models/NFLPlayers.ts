@@ -15,6 +15,7 @@ export interface NFLPlayerAttributes {
   experience?: string;
   age?: number;
   teamId?: number; // Foreign Key
+  status?: number;
 }
 
 interface NFLPlayerCreationAttributes extends Optional<NFLPlayerAttributes, "id"> {}
@@ -74,6 +75,10 @@ NFLPlayer.init(
         model: NFLTeam,
         key: "id",
       },
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {

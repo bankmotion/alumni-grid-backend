@@ -7,5 +7,6 @@ export interface SettingType {
   country?: string;
   draft?: number;
   experience?: string;
-  age?: number;
+  ageTo?: number;
+  ageFrom?:number;
 }

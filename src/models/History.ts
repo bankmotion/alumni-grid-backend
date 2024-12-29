@@ -39,7 +39,4 @@ History.init(
   }
 );
 
-History.belongsTo(NBAPlayer, { foreignKey: "playerId" });
-NBAPlayer.hasMany(History, { foreignKey: "playerId" });
-
 export default History;

@@ -84,6 +84,9 @@ export const getAllPlayerListByType = async (type: PlayType) => {
         lastName: {
           [Op.not]: null as any,
         },
+        college: {
+          [Op.not]: null as any,
+        },
       },
     });
 

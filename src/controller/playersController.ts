@@ -27,9 +27,9 @@ export const identifyingCollege = async (req: Request, res: Response) => {
   try {
     const { id, college, timestamp } = req.body;
     const data = await getPlayerDataByID(id);
-    console.log(data);
+    console.log({ id, timestamp });
     if (data?.dataValues.college === college) {
-      await incrementCorrectCount(1, { id });
+      await incrementCorrectCount(1, { playerId: id, timestamp });
       res.status(200).json({ status: 200, message: true });
     } else {
       res.status(200).json({ status: 200, message: false });

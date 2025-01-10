@@ -46,6 +46,7 @@ export const gameStart = async (req: Request, res: Response) => {
   try {
     const { id, timestamp } = req.body;
     await incrementPlayingCount(1, { timestamp });
+    res.status(200).json({ status: 200, message: true });
   } catch (err) {
     console.error(`playerController~gameStart() => ${err}`);
     res.status(500).json({ status: 500, message: "Failed to start game" });

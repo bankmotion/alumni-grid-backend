@@ -7,6 +7,10 @@ import {
   updateActiveStatusById,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";
+import {
+  incrementCorrectCount,
+  incrementPlayingCount,
+} from "../service/historyService";
 
 export const getColleges = async (req: Request, res: Response) => {
   try {
@@ -21,10 +25,11 @@ export const getColleges = async (req: Request, res: Response) => {
 
 export const identifyingCollege = async (req: Request, res: Response) => {
   try {
-    const { id, college } = req.body;
+    const { id, college, timestamp } = req.body;
     const data = await getPlayerDataByID(id);
     console.log(data);
     if (data?.dataValues.college === college) {
+      await incrementCorrectCount(1, { playerId: id, timestamp });
       res.status(200).json({ status: 200, message: true });
     } else {
       res.status(200).json({ status: 200, message: false });
@@ -34,6 +39,16 @@ export const identifyingCollege = async (req: Request, res: Response) => {
     res
       .status(500)
       .json({ status: 500, message: "Failed to identify college" });
+  }
+};
+
+export const gameStart = async (req: Request, res: Response) => {
+  try {
+    const { id, timestamp } = req.body;
+    await incrementPlayingCount(1, { timestamp });
+  } catch (err) {
+    console.error(`playerController~gameStart() => ${err}`);
+    res.status(500).json({ status: 500, message: "Failed to start game" });
   }
 };
 

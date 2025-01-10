@@ -6,6 +6,8 @@ export interface HistoryAttributes {
   id?: number;
   playerId?: number;
   timestamp?: number;
+  playingCount?: number;
+  correctCount?: number;
 }
 
 interface HistoryCreationAttributes extends Optional<HistoryAttributes, "id"> {}
@@ -30,6 +32,14 @@ History.init(
     timestamp: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    playingCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    correctCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
   },
   {

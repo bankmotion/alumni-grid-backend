@@ -78,3 +78,19 @@ export const getAllHistorySer = async () => {
 
   return results;
 };
+
+export const incrementCorrectCount = async (
+  correctCount: number,
+  where: any
+) => {
+  await History.increment("correctCount", { by: correctCount, where });
+  return true;
+};
+
+export const incrementPlayingCount = async (
+  playingCount: number,
+  where: any
+) => {
+  await History.increment("playingCount", { by: playingCount, where });
+  return true;
+};

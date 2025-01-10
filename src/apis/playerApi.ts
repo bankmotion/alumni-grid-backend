@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  gameStart,
   getAllPlayerList,
   getColleges,
   getPlayerInfo,
@@ -12,6 +13,8 @@ const router = express.Router();
 router.get("/colleges", getColleges);
 
 router.post("/college", identifyingCollege);
+
+router.post("/gamestart", gameStart)
 
 router.get("/:id", getPlayerInfo);
 

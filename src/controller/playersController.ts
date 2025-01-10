@@ -66,6 +66,7 @@ export const updateActive = async (req: Request, res: Response) => {
     const { type } = req.params;
     const { id, status } = req.body;
     await updateActiveStatusById(Number(type), id, status);
+    res.status(200).json({ status: 200 });
   } catch (err) {
     console.error(`playController ~ updateActive() => ${err}`);
   }

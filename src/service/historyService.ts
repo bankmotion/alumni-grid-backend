@@ -45,12 +45,12 @@ export const getAllHistorySer = async () => {
 
   let results: {
     timestamp: number;
-    playingCount: number;
-    correctCount: number;
     players: {
       id: number;
       firstName: string;
       lastName: string;
+      playingCount: number;
+      correctCount: number;
     }[];
   }[] = [];
 
@@ -60,8 +60,6 @@ export const getAllHistorySer = async () => {
     if (!results.some((item) => item.timestamp === dat.timestamp)) {
       results.push({
         timestamp: dat.timestamp,
-        playingCount: dat.playingCount,
-        correctCount: dat.correctCount,
         players: [],
       });
     }
@@ -74,6 +72,8 @@ export const getAllHistorySer = async () => {
         id: dat["NBAPlayer.id"],
         firstName: dat["NBAPlayer.firstName"],
         lastName: dat["NBAPlayer.lastName"],
+        playingCount: dat.playingCount,
+        correctCount: dat.correctCount,
       });
 
       return updatedRes;

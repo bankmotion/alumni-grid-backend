@@ -45,6 +45,8 @@ export const getAllHistorySer = async () => {
 
   let results: {
     timestamp: number;
+    playingCount: number;
+    correctCount: number;
     players: {
       id: number;
       firstName: string;
@@ -58,6 +60,8 @@ export const getAllHistorySer = async () => {
     if (!results.some((item) => item.timestamp === dat.timestamp)) {
       results.push({
         timestamp: dat.timestamp,
+        playingCount: dat.playingCount,
+        correctCount: dat.correctCount,
         players: [],
       });
     }

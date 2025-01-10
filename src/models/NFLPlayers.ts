@@ -16,11 +16,16 @@ export interface NFLPlayerAttributes {
   age?: number;
   teamId?: number; // Foreign Key
   status?: number;
+  active?: number;
 }
 
-interface NFLPlayerCreationAttributes extends Optional<NFLPlayerAttributes, "id"> {}
+interface NFLPlayerCreationAttributes
+  extends Optional<NFLPlayerAttributes, "id"> {}
 
-class NFLPlayer extends Model<NFLPlayerAttributes, NFLPlayerCreationAttributes> {}
+class NFLPlayer extends Model<
+  NFLPlayerAttributes,
+  NFLPlayerCreationAttributes
+> {}
 
 NFLPlayer.init(
   {
@@ -77,6 +82,10 @@ NFLPlayer.init(
       },
     },
     status: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    active: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },

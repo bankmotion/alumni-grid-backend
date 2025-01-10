@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { PlayType } from "../config/constant";
+import { ActiveStatus, PlayType } from "../config/constant";
 import NBAPlayer from "../models/NBAPlayers";
 import NFLPlayer from "../models/NFLPlayers";
 import { getRandNumber } from "../utils/utils";
@@ -43,7 +43,16 @@ export const getRandPlayerInfo = async (playType: PlayType = 0) => {
   if (model) {
     data = await model.findAll({
       attributes: ["id", "firstName", "lastName"],
-      where: { status: 1 },
+      where: {
+        [Op.or]: [
+          {
+            [Op.and]: [{ status: 1 }, { active: { [Op.ne]: -1 } }],
+          },
+          {
+            active: 1,
+          },
+        ],
+      },
     });
     const dataCount = data.length;
 
@@ -343,5 +352,17 @@ export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
     } catch (error) {
       console.error(`Error updating players for playType: ${playType}`, error);
     }
+  }
+};
+
+export const updateActiveStatusById = async (
+  type: PlayType,
+  id: number,
+  status: number
+) => {
+  if (type === PlayType.NBA) {
+    await NBAPlayer.update({ active: status }, { where: { id } });
+  } else if (type === PlayType.NFL) {
+    await NFLPlayer.update({ active: status }, { where: { id } });
   }
 };

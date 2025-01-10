@@ -17,6 +17,7 @@ export interface NBAPlayerAttributes {
   draftNumber?: number;
   teamId?: number; // Foreign Key
   status?: number;
+  active?: number;
 }
 
 interface NBAPlayerCreationAttributes
@@ -85,7 +86,11 @@ NBAPlayer.init(
         key: "id",
       },
     },
-     status: {
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    active: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },

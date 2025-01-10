@@ -4,6 +4,7 @@ import {
   getColleges,
   getPlayerInfo,
   identifyingCollege,
+  updateActive,
 } from "../controller/playersController";
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.post("/college", identifyingCollege);
 router.get("/:id", getPlayerInfo);
 
 router.get("/all/:type", getAllPlayerList);
+
+router.put("/active/:type", updateActive);
 
 export default router;

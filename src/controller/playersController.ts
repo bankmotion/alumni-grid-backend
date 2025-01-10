@@ -4,6 +4,7 @@ import {
   getAllPlayerListByType,
   getPlayerDataByID,
   getRandPlayerInfo,
+  updateActiveStatusById,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";
 
@@ -57,5 +58,15 @@ export const getAllPlayerList = async (req: Request, res: Response) => {
     res
       .status(500)
       .json({ status: 500, message: "Failed to get all player list" });
+  }
+};
+
+export const updateActive = async (req: Request, res: Response) => {
+  try {
+    const { type } = req.params;
+    const { id, status } = req.body;
+    await updateActiveStatusById(Number(type), id, status);
+  } catch (err) {
+    console.error(`playController ~ updateActive() => ${err}`);
   }
 };

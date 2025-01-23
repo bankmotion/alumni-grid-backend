@@ -129,9 +129,15 @@ export const getAllHistorySer = async (playType: PlayType) => {
 
 export const incrementCorrectCount = async (
   correctCount: number,
-  where: any
+  where: any,
+  playType: PlayType
 ) => {
-  await History.increment("correctCount", { by: correctCount, where });
+  if (playType === PlayType.NBA) {
+    await History.increment("correctCount", { by: correctCount, where });
+  } else if (playType === PlayType.NFL) {
+    await HistoryNFL.increment("correctCount", { by: correctCount, where });
+  }
+
   return true;
 };
 

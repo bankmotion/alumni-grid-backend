@@ -3,7 +3,6 @@ import {
   getAllColleges,
   getAllPlayerListByType,
   getPlayerDataByID,
-  getRandPlayerInfo,
   updateActiveStatusById,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";

@@ -6,14 +6,14 @@ import {
   deleteSettingById,
   getSettings,
   updateSetting,
-  getAllSettings
 } from "../service/adminService";
-import {updateStatusOfPlayers}  from "../service/playersService"
-import { all } from "axios";
+import { updateStatusOfPlayers } from "../service/playersService";
+import { PlayType } from "../config/constant";
 
 export const createOrUpdateSetting = async (req: Request, res: Response) => {
   try {
-    const { id, position, country, draft, experience, ageTo, ageFrom } = req.body;
+    const { id, position, country, draft, experience, ageTo, ageFrom } =
+      req.body;
     const { type } = req.params;
 
     const data: SettingType = { type: Number(type) };
@@ -31,10 +31,9 @@ export const createOrUpdateSetting = async (req: Request, res: Response) => {
       await createNewSetting(data);
     }
 
-    const allSettings = await getAllSettings();
+    const settings = await getSettings(Number(type) as PlayType);
 
-    console.log(allSettings,"allSettings")
-    await updateStatusOfPlayers(allSettings);
+    await updateStatusOfPlayers(settings, Number(type) as PlayType);
 
     res.status(200).json({ status: 200 });
   } catch (err) {
@@ -47,11 +46,11 @@ export const createOrUpdateSetting = async (req: Request, res: Response) => {
 
 export const deleteSetting = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id, type } = req.params;
     await deleteSettingById(Number(id));
 
-    const allSettings = await getAllSettings();
-    await updateStatusOfPlayers(allSettings);
+    const settings = await getSettings(Number(type) as PlayType);
+    await updateStatusOfPlayers(settings, Number(type) as PlayType);
 
     res.status(200).json({ status: 200 });
   } catch (err) {

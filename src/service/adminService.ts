@@ -35,8 +35,3 @@ export const getSettings = async (type: PlayType) => {
   const data = await Setting.findAll({ where: { type } });
   return data;
 };
-
-export const getAllSettings = async () => {
-  const data = await Setting.findAll();
-  return data;
-};

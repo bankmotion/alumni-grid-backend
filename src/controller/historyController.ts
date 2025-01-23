@@ -1,18 +1,16 @@
 import { Request, Response } from "express";
-import {
-  getGameData,
-  getAllHistorySer,
-} from "../service/historyService";
+import { getGameData, getAllHistorySer } from "../service/historyService";
 import { GameDuration } from "../config/config";
 import { getStartTimeByTimestampDaily } from "../utils/utils";
+import { PlayType } from "../config/constant";
 
 export const getPlayersByTimeStamp = async (req: Request, res: Response) => {
   try {
-    const { timestamp } = req.params;
+    const { playType, timestamp } = req.params;
     const curTimestamp = getStartTimeByTimestampDaily(Number(timestamp));
 
     console.log(curTimestamp);
-    let data = await getGameData(curTimestamp);
+    let data = await getGameData(curTimestamp, playType as unknown as PlayType);
 
     res.status(200).json({ status: 200, data, timestamp: curTimestamp });
   } catch (err) {
@@ -25,7 +23,8 @@ export const getPlayersByTimeStamp = async (req: Request, res: Response) => {
 
 export const getAllHistory = async (req: Request, res: Response) => {
   try {
-    const data = await getAllHistorySer();
+    const { playType } = req.params;
+    const data = await getAllHistorySer(playType as unknown as PlayType);
 
     res.status(200).json({ status: 200, data });
   } catch (err) {

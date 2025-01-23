@@ -9,7 +9,7 @@ export interface SettingAttributes {
 
 interface SettingCreationAttributes extends Optional<SettingAttributes, "id"> {}
 
-class Setting extends Model<SettingAttributes, SettingAttributes> {}
+class Setting extends Model<SettingAttributes, SettingCreationAttributes> {}
 
 Setting.init(
   {

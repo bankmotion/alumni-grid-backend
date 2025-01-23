@@ -14,7 +14,8 @@ import {
 
 export const getColleges = async (req: Request, res: Response) => {
   try {
-    const data = await getAllColleges(0);
+    const { playType } = req.params;
+    const data = await getAllColleges(playType as unknown as PlayType);
 
     res.status(200).json({ status: 200, colleges: data });
   } catch (err) {
@@ -26,8 +27,10 @@ export const getColleges = async (req: Request, res: Response) => {
 export const identifyingCollege = async (req: Request, res: Response) => {
   try {
     const { id, college, timestamp } = req.body;
-    const data = await getPlayerDataByID(id);
-    console.log({ id, timestamp });
+    const { playType } = req.params;
+
+    const data = await getPlayerDataByID(id, playType as unknown as PlayType);
+    
     if (data?.dataValues.college === college) {
       await incrementCorrectCount(1, { playerId: id, timestamp });
       res.status(200).json({ status: 200, message: true });
@@ -44,9 +47,16 @@ export const identifyingCollege = async (req: Request, res: Response) => {
 
 export const gameStart = async (req: Request, res: Response) => {
   try {
-    const { id, timestamp } = req.body;
-    await incrementPlayingCount(1, { timestamp });
-    res.status(200).json({ status: 200, message: true });
+    const { timestamp } = req.body;
+    const { playType } = req.params;
+    const result = await incrementPlayingCount(
+      1,
+      playType as unknown as PlayType,
+      {
+        timestamp,
+      }
+    );
+    res.status(200).json({ status: 200, message: result });
   } catch (err) {
     console.error(`playerController~gameStart() => ${err}`);
     res.status(500).json({ status: 500, message: "Failed to start game" });
@@ -55,8 +65,11 @@ export const gameStart = async (req: Request, res: Response) => {
 
 export const getPlayerInfo = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const data = await getPlayerDataByID(Number(id));
+    const { playType, id } = req.params;
+    const data = await getPlayerDataByID(
+      Number(id),
+      playType as unknown as PlayType
+    );
     res.status(200).json({ status: 200, data });
   } catch (err) {
     console.error(`playerController~getPlayerInfo() => ${err}`);

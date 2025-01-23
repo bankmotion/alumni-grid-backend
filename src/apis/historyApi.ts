@@ -6,8 +6,8 @@ import {
 
 const router = express.Router();
 
-router.get("/timestamp/:timestamp", getPlayersByTimeStamp);
+router.get("/timestamp/:playType/:timestamp", getPlayersByTimeStamp); // using
 
-router.get("/all", getAllHistory);
+router.get("/all/:playType", getAllHistory); // using
 
 export default router;

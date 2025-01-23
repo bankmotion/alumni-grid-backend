@@ -13,6 +13,7 @@ import {
 import routes from "./routes";
 import dotenv from "dotenv";
 import { createNewGameEvent } from "./events/newGameEvent";
+import { PlayType } from "./config/constant";
 dotenv.config();
 
 const app = express();
@@ -43,7 +44,8 @@ const startServer = async () => {
         }`
       );
 
-      createNewGameEvent();
+      createNewGameEvent(PlayType.NBA);
+      createNewGameEvent(PlayType.NFL);
     });
   } catch (err) {
     console.error(`Error synchronizing the database: ${err}`);

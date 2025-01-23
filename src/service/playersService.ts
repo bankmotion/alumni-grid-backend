@@ -33,7 +33,7 @@ export const getAllColleges = async (playType: PlayType) => {
   return data;
 };
 
-export const getRandPlayerInfo = async (playType: PlayType = 0) => {
+export const getRandPlayerInfo = async (playType: PlayType) => {
   const model = getModelFromPlayType(playType);
 
   let data: NBAPlayer[] | NFLPlayer[] = [];
@@ -68,9 +68,8 @@ export const getRandPlayerInfo = async (playType: PlayType = 0) => {
   return resArr;
 };
 
-export const getPlayerDataByID = async (id: number, type: PlayType = 0) => {
+export const getPlayerDataByID = async (id: number, type: PlayType) => {
   const model = getModelFromPlayType(type);
-  console.log(model);
 
   if (model) {
     const data = await model.findOne({
@@ -103,8 +102,6 @@ export const getAllPlayerListByType = async (type: PlayType) => {
   }
   return null;
 };
-
-// export const updateStatusOfPlayers = async (allSettings: Setting[]) => {
 
 //   // Parse settings and filter out invalid ones
 //   const settings = allSettings

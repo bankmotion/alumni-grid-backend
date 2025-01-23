@@ -10,16 +10,16 @@ import {
 
 const router = express.Router();
 
-router.get("/colleges", getColleges);
+router.get("/colleges/:playType", getColleges); // using
 
-router.post("/college", identifyingCollege);
+router.post("/college/:playType", identifyingCollege); // using
 
-router.post("/gamestart", gameStart)
+router.post("/gamestart/:playType", gameStart); // using
 
-router.get("/:id", getPlayerInfo);
+router.get("/answer/:playType/:id", getPlayerInfo); // using
 
-router.get("/all/:type", getAllPlayerList);
+router.get("/all/:type", getAllPlayerList); // using
 
-router.put("/active/:type", updateActive);
+router.put("/active/:type", updateActive); // using
 
 export default router;

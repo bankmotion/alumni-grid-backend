@@ -1,47 +1,90 @@
-import { GameDuration, StartTimeStamp } from "../config/config";
+import { StartTimeStamp } from "../config/config";
+import { PlayType } from "../config/constant";
 import History from "../models/History";
+import HistoryNFL from "../models/HistoryNFL";
 import NBAPlayer from "../models/NBAPlayers";
-import { getStartTimeByTimestampDaily } from "../utils/utils";
+import NFLPlayer from "../models/NFLPlayers";
 import { getRandPlayerInfo } from "./playersService";
 
-export const getLatestTimestamp = async () => {
-  let latestTimestamp = await History.max("timestamp");
-  if (!latestTimestamp) latestTimestamp = StartTimeStamp;
-  return Number(latestTimestamp);
+export const getLatestTimestamp = async (playType: PlayType) => {
+  if (playType === PlayType.NBA) {
+    let latestTimestamp = await History.max("timestamp");
+    if (!latestTimestamp) latestTimestamp = StartTimeStamp;
+    return Number(latestTimestamp);
+  } else if (playType === PlayType.NFL) {
+    let latestTimestamp = await HistoryNFL.max("timestamp");
+    if (!latestTimestamp) latestTimestamp = StartTimeStamp;
+    return Number(latestTimestamp);
+  }
+  return 0;
 };
 
-export const createNewGame = async (timestamp: number) => {
-  const data = await getRandPlayerInfo();
-  for (const dat of data) {
-    await History.create({
-      playerId: dat.dataValues.id,
-      timestamp,
-    });
+export const createNewGame = async (timestamp: number, playType: PlayType) => {
+  const data = await getRandPlayerInfo(playType);
+  if (playType === PlayType.NBA) {
+    for (const dat of data) {
+      await History.create({
+        playerId: dat.dataValues.id,
+        timestamp,
+      });
+    }
+  } else if (playType === PlayType.NFL) {
+    for (const dat of data) {
+      await HistoryNFL.create({
+        playerId: dat.dataValues.id,
+        timestamp,
+      });
+    }
   }
 
   return timestamp;
 };
 
-export const getGameData = async (timestamp: number) => {
-  const data = await History.findAll({
-    where: { timestamp },
-    include: {
-      model: NBAPlayer,
-      attributes: ["id", "firstName", "lastName"],
-    },
-  });
+export const getGameData = async (timestamp: number, playType: PlayType) => {
+  if (playType === PlayType.NBA) {
+    const data = await History.findAll({
+      where: { timestamp },
+      include: {
+        model: NBAPlayer,
+        attributes: ["id", "firstName", "lastName"],
+      },
+    });
 
-  return data;
+    return data;
+  } else if (playType === PlayType.NFL) {
+    const data = await HistoryNFL.findAll({
+      where: { timestamp },
+      include: {
+        model: NFLPlayer,
+        attributes: ["id", "firstName", "lastName"],
+      },
+    });
+
+    return data;
+  }
+
+  return null;
 };
 
-export const getAllHistorySer = async () => {
-  const data = await History.findAll({
-    include: {
-      model: NBAPlayer,
-      attributes: ["id", "firstName", "lastName"],
-    },
-    raw: true,
-  });
+export const getAllHistorySer = async (playType: PlayType) => {
+  let data: History[] | HistoryNFL[] = [];
+  if (playType === PlayType.NBA) {
+    data = await History.findAll({
+      include: {
+        model: NBAPlayer,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      raw: true,
+    });
+  } else if (playType === PlayType.NFL) {
+    data = await HistoryNFL.findAll({
+      include: {
+        model: NFLPlayer,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      raw: true,
+    });
+  }
 
   let results: {
     timestamp: number;
@@ -69,9 +112,9 @@ export const getAllHistorySer = async () => {
 
       const updatedRes = { ...result };
       updatedRes.players.push({
-        id: dat["NBAPlayer.id"],
-        firstName: dat["NBAPlayer.firstName"],
-        lastName: dat["NBAPlayer.lastName"],
+        id: dat["NBAPlayer.id"] || dat["NFLPlayer.id"],
+        firstName: dat["NBAPlayer.firstName"] || dat["NFLPlayer.firstName"],
+        lastName: dat["NBAPlayer.lastName"] || dat["NFLPlayer.lastName"],
         playingCount: dat.playingCount,
         correctCount: dat.correctCount,
       });
@@ -93,8 +136,16 @@ export const incrementCorrectCount = async (
 
 export const incrementPlayingCount = async (
   playingCount: number,
+  playType: PlayType,
   where: any
 ) => {
-  await History.increment("playingCount", { by: playingCount, where });
+  if (playType === PlayType.NBA) {
+    await History.increment("playingCount", { by: playingCount, where });
+  } else if (playType === PlayType.NFL) {
+    await HistoryNFL.increment("playingCount", { by: playingCount, where });
+  } else {
+    return false;
+  }
+
   return true;
 };

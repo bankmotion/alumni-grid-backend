@@ -48,7 +48,7 @@ HistoryNFL.init(
   },
   {
     sequelize,
-    tableName: "history",
+    tableName: "history_nfl",
     timestamps: false,
   }
 );

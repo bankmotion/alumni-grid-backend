@@ -11,6 +11,6 @@ router.get("/:type", getSetting);
 
 router.post("/:type", createOrUpdateSetting);
 
-router.delete("/:id", deleteSetting);
+router.delete("/:id/:type", deleteSetting);
 
 export default router;

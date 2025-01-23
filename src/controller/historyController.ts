@@ -10,7 +10,7 @@ export const getPlayersByTimeStamp = async (req: Request, res: Response) => {
     const curTimestamp = getStartTimeByTimestampDaily(Number(timestamp));
 
     console.log(curTimestamp);
-    let data = await getGameData(curTimestamp, playType as unknown as PlayType);
+    let data = await getGameData(curTimestamp, Number(playType) as PlayType);
 
     res.status(200).json({ status: 200, data, timestamp: curTimestamp });
   } catch (err) {
@@ -24,7 +24,7 @@ export const getPlayersByTimeStamp = async (req: Request, res: Response) => {
 export const getAllHistory = async (req: Request, res: Response) => {
   try {
     const { playType } = req.params;
-    const data = await getAllHistorySer(playType as unknown as PlayType);
+    const data = await getAllHistorySer(Number(playType) as PlayType);
 
     res.status(200).json({ status: 200, data });
   } catch (err) {

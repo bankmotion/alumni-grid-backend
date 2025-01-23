@@ -15,7 +15,7 @@ import {
 export const getColleges = async (req: Request, res: Response) => {
   try {
     const { playType } = req.params;
-    const data = await getAllColleges(playType as unknown as PlayType);
+    const data = await getAllColleges(Number(playType) as PlayType);
 
     res.status(200).json({ status: 200, colleges: data });
   } catch (err) {
@@ -29,8 +29,8 @@ export const identifyingCollege = async (req: Request, res: Response) => {
     const { id, college, timestamp } = req.body;
     const { playType } = req.params;
 
-    const data = await getPlayerDataByID(id, playType as unknown as PlayType);
-    
+    const data = await getPlayerDataByID(id, Number(playType) as PlayType);
+
     if (data?.dataValues.college === college) {
       await incrementCorrectCount(1, { playerId: id, timestamp });
       res.status(200).json({ status: 200, message: true });
@@ -51,7 +51,7 @@ export const gameStart = async (req: Request, res: Response) => {
     const { playType } = req.params;
     const result = await incrementPlayingCount(
       1,
-      playType as unknown as PlayType,
+      Number(playType) as PlayType,
       {
         timestamp,
       }
@@ -68,7 +68,7 @@ export const getPlayerInfo = async (req: Request, res: Response) => {
     const { playType, id } = req.params;
     const data = await getPlayerDataByID(
       Number(id),
-      playType as unknown as PlayType
+      Number(playType) as PlayType
     );
     res.status(200).json({ status: 200, data });
   } catch (err) {

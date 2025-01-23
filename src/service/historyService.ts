@@ -68,6 +68,7 @@ export const getGameData = async (timestamp: number, playType: PlayType) => {
 
 export const getAllHistorySer = async (playType: PlayType) => {
   let data: History[] | HistoryNFL[] = [];
+  console.log({ playType });
   if (playType === PlayType.NBA) {
     data = await History.findAll({
       include: {

@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { ActiveStatus, PlayType } from "../config/constant";
+import { ActiveStatus, Difficulty, PlayType } from "../config/constant";
 import NBAPlayer from "../models/NBAPlayers";
 import NFLPlayer from "../models/NFLPlayers";
 import { getRandNumber } from "../utils/utils";
@@ -54,9 +54,14 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
         ],
       },
     });
-    const dataCount = data.length;
 
     while (gridCount) {
+      const filteredData = data.filter(
+        (dat) =>
+          dat.dataValues.difficulty === (Math.ceil(gridCount / 3) as Difficulty)
+      );
+      const dataCount = filteredData.length;
+      if (!dataCount) return [];
       const randNum = getRandNumber(0, dataCount - 1);
       if (indexArr.findIndex((num) => num === randNum) !== -1) continue;
       indexArr.push(randNum);

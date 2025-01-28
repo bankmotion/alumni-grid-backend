@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { SettingAttributes } from "../models/Setting";
 import { SettingType } from "../interface";
 import {
   createNewSetting,
@@ -80,14 +79,15 @@ export const updateDifficultyStatus = async (req: Request, res: Response) => {
     const { ids, difficulty } = req.body;
 
     if (!Array.isArray(ids) || typeof difficulty !== "number") {
-      return res.status(400).json({ status: 400, error: "Invalid input data" });
+      res.status(400).json({ status: 400, error: "Invalid input data" });
+      return;
     }
 
     for (const id of ids) {
       await updatePlayersById({ difficulty }, { id }, Number(type));
     }
 
-    return res.status(200).json("Updated successfully");
+    res.status(200).json("Updated successfully");
   } catch (err) {
     console.error(`adminController ~ updateDifficultyStatus() => ${err}`);
     res.status(500).json({ status: 500, message: "Failed to get setting" });

@@ -61,7 +61,10 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
           dat.dataValues.difficulty === (Math.ceil(gridCount / 3) as Difficulty)
       );
       const dataCount = filteredData.length;
-      console.log({ dataCount });
+      console.log({
+        dataCount,
+        difficulty: Math.ceil(gridCount / 3) as Difficulty,
+      });
       if (!dataCount) return [];
       const randNum = getRandNumber(0, dataCount - 1);
       if (indexArr.findIndex((num) => num === randNum) !== -1) continue;

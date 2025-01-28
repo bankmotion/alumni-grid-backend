@@ -8,3 +8,10 @@ export enum ActiveStatus {
   Inactived = -1,
   Canceled = 0,
 }
+
+export enum Difficulty {
+  None,
+  Easy,
+  Medium,
+  Hard,
+}

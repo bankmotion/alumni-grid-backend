@@ -3,7 +3,7 @@ import {
   getAllColleges,
   getAllPlayerListByType,
   getPlayerDataByID,
-  updateActiveStatusById,
+  updatePlayersById,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";
 import {
@@ -97,7 +97,7 @@ export const updateActive = async (req: Request, res: Response) => {
   try {
     const { type } = req.params;
     const { id, status } = req.body;
-    await updateActiveStatusById(Number(type), id, status);
+    await updatePlayersById({ active: status }, { id }, Number(type));
     res.status(200).json({ status: 200 });
   } catch (err) {
     console.error(`playController ~ updateActive() => ${err}`);

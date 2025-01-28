@@ -329,14 +329,14 @@ export const updateStatusOfPlayers = async (
   }
 };
 
-export const updateActiveStatusById = async (
-  type: PlayType,
-  id: number,
-  status: number
+export const updatePlayersById = async (
+  target: any,
+  where: any,
+  type: PlayType
 ) => {
   if (type === PlayType.NBA) {
-    await NBAPlayer.update({ active: status }, { where: { id } });
+    await NBAPlayer.update(target, { where });
   } else if (type === PlayType.NFL) {
-    await NFLPlayer.update({ active: status }, { where: { id } });
+    await NFLPlayer.update(target, { where });
   }
 };

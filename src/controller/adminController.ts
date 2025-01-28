@@ -7,8 +7,11 @@ import {
   getSettings,
   updateSetting,
 } from "../service/adminService";
-import { updateStatusOfPlayers } from "../service/playersService";
-import { PlayType } from "../config/constant";
+import {
+  updatePlayersById,
+  updateStatusOfPlayers,
+} from "../service/playersService";
+import { Difficulty, PlayType } from "../config/constant";
 
 export const createOrUpdateSetting = async (req: Request, res: Response) => {
   try {
@@ -67,6 +70,26 @@ export const getSetting = async (req: Request, res: Response) => {
     res.status(200).json({ status: 200, data });
   } catch (err) {
     console.error(`adminController ~ getSetting() => ${err}`);
+    res.status(500).json({ status: 500, message: "Failed to get setting" });
+  }
+};
+
+export const updateDifficultyStatus = async (req: Request, res: Response) => {
+  try {
+    const { type } = req.params;
+    const { ids, difficulty } = req.body;
+
+    if (!Array.isArray(ids) || typeof difficulty !== "number") {
+      return res.status(400).json({ status: 400, error: "Invalid input data" });
+    }
+
+    for (const id of ids) {
+      await updatePlayersById({ difficulty }, { id }, Number(type));
+    }
+
+    return res.status(200).json("Updated successfully");
+  } catch (err) {
+    console.error(`adminController ~ updateDifficultyStatus() => ${err}`);
     res.status(500).json({ status: 500, message: "Failed to get setting" });
   }
 };

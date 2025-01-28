@@ -17,6 +17,7 @@ export interface NFLPlayerAttributes {
   teamId?: number; // Foreign Key
   status?: number;
   active?: number;
+  difficulty?: number;
 }
 
 interface NFLPlayerCreationAttributes
@@ -88,6 +89,11 @@ NFLPlayer.init(
     active: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    difficulty: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
     },
   },
   {

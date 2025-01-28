@@ -18,6 +18,7 @@ export interface NBAPlayerAttributes {
   teamId?: number; // Foreign Key
   status?: number;
   active?: number;
+  difficulty?: number;
 }
 
 interface NBAPlayerCreationAttributes
@@ -93,6 +94,11 @@ NBAPlayer.init(
     active: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    difficulty: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
     },
   },
   {

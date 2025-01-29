@@ -56,7 +56,7 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
     });
 
     while (gridCount) {
-      console.log(data.slice(0, 10).map((dat) => dat.dataValues.difficulty));
+      console.log(data.slice(0, 10).map((dat) => dat.dataValues));
       const filteredData = data.filter(
         (dat) =>
           (dat.dataValues.difficulty as Difficulty) ===

@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { ActiveStatus, Difficulty, PlayType } from "../config/constant";
 import NBAPlayer from "../models/NBAPlayers";
 import NFLPlayer from "../models/NFLPlayers";
-import { getRandNumber } from "../utils/utils";
+import { delay, getRandNumber } from "../utils/utils";
 import Setting from "../models/Setting";
 
 export const getModelFromPlayType = (playType: PlayType) => {
@@ -55,25 +55,24 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
       },
     });
 
-    while (gridCount) {
-      console.log(data.slice(0, 10).map((dat) => dat.dataValues));
+    while (gridCount > 0) {
+      const difficulty = Math.ceil(gridCount / 3) as Difficulty;
+
       const filteredData = data.filter(
-        (dat) =>
-          (dat.dataValues.difficulty as Difficulty) ===
-          (Math.ceil(gridCount / 3) as Difficulty)
+        (dat) => (dat.dataValues.difficulty as Difficulty) === difficulty
       );
-      const dataCount = filteredData.length;
       console.log({
-        dataCount,
+        dataCount: filteredData.length,
         difficulty: Math.ceil(gridCount / 3) as Difficulty,
       });
-      if (!dataCount) return [];
-      const randNum = getRandNumber(0, dataCount - 1);
-      if (indexArr.findIndex((num) => num === randNum) !== -1) continue;
+      if (filteredData.length < 3) return [];
+      const randNum = getRandNumber(0, filteredData.length - 1);
+      if (indexArr.some((num) => num === randNum)) continue;
       indexArr.push(randNum);
       resArr.push(filteredData[randNum]);
       gridCount--;
     }
+    await delay(1);
   }
 
   return resArr;

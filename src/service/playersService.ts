@@ -42,7 +42,7 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
   let resArr: NBAPlayer[] | NFLPlayer[] = [];
   if (model) {
     data = await model.findAll({
-      attributes: ["id", "firstName", "lastName"],
+      attributes: ["id", "firstName", "lastName", "difficulty"],
       where: {
         [Op.or]: [
           {

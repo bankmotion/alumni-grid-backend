@@ -10,7 +10,6 @@ const createNewGameDaily = async (playType: PlayType) => {
     const nowTime = Math.floor(new Date().getTime() / 1000);
     const nowGameTime = getStartTimeByTimestampDaily(nowTime);
 
-    console.log("hi", nowGameTime, latestTime)
     while (nowGameTime >= latestTime) {
       const result = await createNewGame(latestTime, playType);
       if (!result) return latestTime;

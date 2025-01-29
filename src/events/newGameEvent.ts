@@ -29,11 +29,9 @@ export const createNewGameEvent = async (playType: PlayType) => {
     const scheduleNextTime = async () => {
       const remainTime = await createNewGameDaily(playType);
 
-      console.log({ remainTime });
-
       setTimeout(async () => {
         await scheduleNextTime();
-      }, 1000 * remainTime);
+      }, 1000 * Math.min(86400, remainTime));
     };
 
     await scheduleNextTime();

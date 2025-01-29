@@ -55,7 +55,7 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
     });
 
     while (gridCount > 0) {
-      const difficulty = Math.ceil(10 - gridCount / 3) as Difficulty;
+      const difficulty = Math.ceil((10 - gridCount) / 3) as Difficulty;
 
       const filteredData = data.filter(
         (dat) => (dat.dataValues.difficulty as Difficulty) === difficulty

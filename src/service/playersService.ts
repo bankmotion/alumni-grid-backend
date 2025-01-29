@@ -38,7 +38,6 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
 
   let data: NBAPlayer[] | NFLPlayer[] = [];
   let gridCount = 9;
-  let indexArr: number[] = [];
   let resArr: NBAPlayer[] | NFLPlayer[] = [];
   if (model) {
     data = await model.findAll({
@@ -67,12 +66,16 @@ export const getRandPlayerInfo = async (playType: PlayType) => {
       });
       if (filteredData.length < 3) return [];
       const randNum = getRandNumber(0, filteredData.length - 1);
-      if (indexArr.some((num) => num === randNum)) continue;
-      indexArr.push(randNum);
-      resArr.push(filteredData[randNum]);
+      console.log({ randNum });
+
+      const randData = filteredData[randNum];
+      if (
+        resArr.some((player) => player.dataValues.id === randData.dataValues.id)
+      )
+        continue;
+      resArr.push(randData);
       gridCount--;
     }
-    await delay(1);
   }
 
   return resArr;

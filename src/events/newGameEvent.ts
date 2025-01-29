@@ -1,7 +1,7 @@
 import { GameDuration } from "../config/config";
 import { PlayType } from "../config/constant";
 import { createNewGame, getLatestTimestamp } from "../service/historyService";
-import { getStartTimeByTimestampDaily } from "../utils/utils";
+import { delay, getStartTimeByTimestampDaily } from "../utils/utils";
 
 const createNewGameDaily = async (playType: PlayType) => {
   try {
@@ -10,8 +10,10 @@ const createNewGameDaily = async (playType: PlayType) => {
     const nowTime = Math.floor(new Date().getTime() / 1000);
     const nowGameTime = getStartTimeByTimestampDaily(nowTime);
 
+    console.log("hi", nowGameTime, latestTime)
     while (nowGameTime >= latestTime) {
-      await createNewGame(latestTime, playType);
+      const result = await createNewGame(latestTime, playType);
+      if (!result) return latestTime;
       latestTime += GameDuration;
     }
 

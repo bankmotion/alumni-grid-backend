@@ -5,7 +5,7 @@ export const delay = async (delayTime: number) => {
 };
 
 export const getRandNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + 1;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 export const getStartTimeByTimestampDaily = (timestamp: number) => {

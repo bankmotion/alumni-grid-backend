@@ -21,6 +21,7 @@ export const getLatestTimestamp = async (playType: PlayType) => {
 
 export const createNewGame = async (timestamp: number, playType: PlayType) => {
   const data = await getRandPlayerInfo(playType);
+  if (data.length !== 9) return false;
   if (playType === PlayType.NBA) {
     for (const dat of data) {
       await History.create({
@@ -37,7 +38,7 @@ export const createNewGame = async (timestamp: number, playType: PlayType) => {
     }
   }
 
-  return timestamp;
+  return true;
 };
 
 export const getGameData = async (timestamp: number, playType: PlayType) => {

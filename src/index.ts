@@ -48,7 +48,7 @@ const startServer = async () => {
       createNewGameEvent(PlayType.NBA);
       createNewGameEvent(PlayType.NFL);
 
-      updateNBAWithImageLink();
+      // updateNBAWithImageLink();
     });
   } catch (err) {
     console.error(`Error synchronizing the database: ${err}`);

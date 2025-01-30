@@ -18,6 +18,7 @@ export interface NFLPlayerAttributes {
   status?: number;
   active?: number;
   difficulty?: number;
+  imageLink?: string;
 }
 
 interface NFLPlayerCreationAttributes
@@ -94,6 +95,9 @@ NFLPlayer.init(
       type: DataTypes.INTEGER,
       defaultValue: 0,
       allowNull: false,
+    },
+    imageLink: {
+      type: DataTypes.STRING,
     },
   },
   {

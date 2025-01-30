@@ -14,6 +14,7 @@ import routes from "./routes";
 import dotenv from "dotenv";
 import { createNewGameEvent } from "./events/newGameEvent";
 import { PlayType } from "./config/constant";
+import { updateNBAWithImageLink } from "./script/nbaImageScript";
 dotenv.config();
 
 const app = express();
@@ -46,6 +47,8 @@ const startServer = async () => {
 
       createNewGameEvent(PlayType.NBA);
       createNewGameEvent(PlayType.NFL);
+
+      updateNBAWithImageLink();
     });
   } catch (err) {
     console.error(`Error synchronizing the database: ${err}`);

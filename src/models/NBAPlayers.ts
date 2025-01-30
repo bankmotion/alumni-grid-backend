@@ -19,6 +19,7 @@ export interface NBAPlayerAttributes {
   status?: number;
   active?: number;
   difficulty?: number;
+  imageLink?: string;
 }
 
 interface NBAPlayerCreationAttributes
@@ -99,6 +100,9 @@ NBAPlayer.init(
       type: DataTypes.INTEGER,
       defaultValue: 0,
       allowNull: false,
+    },
+    imageLink: {
+      type: DataTypes.STRING,
     },
   },
   {

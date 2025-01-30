@@ -47,7 +47,7 @@ export const getGameData = async (timestamp: number, playType: PlayType) => {
       where: { timestamp },
       include: {
         model: NBAPlayer,
-        attributes: ["id", "firstName", "lastName"],
+        attributes: ["id", "firstName", "lastName", "imageLink"],
       },
     });
 
@@ -57,7 +57,7 @@ export const getGameData = async (timestamp: number, playType: PlayType) => {
       where: { timestamp },
       include: {
         model: NFLPlayer,
-        attributes: ["id", "firstName", "lastName"],
+        attributes: ["id", "firstName", "lastName", "imageLink"],
       },
     });
 

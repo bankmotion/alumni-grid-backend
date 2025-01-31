@@ -30,7 +30,8 @@ const getPlayerImageLink = async (firstName: string, page: Page) => {
       const name =
         row.querySelector("td a.d3-o-player-fullname")?.textContent?.trim() ||
         "";
-      const image = row.querySelector("td img.img-responsive")?.getAttribute("src") || "";
+      const image =
+        row.querySelector("td img.img-responsive")?.getAttribute("src") || "";
       return { name, image };
     });
   });
@@ -83,11 +84,12 @@ const start = async (status: boolean = false) => {
     for (const link of links) {
       const results = await getAllPlayerByName(link.name, PlayType.NFL);
       console.log(results.length, link.name, link.image);
-      const imageLink = results.length === 1 ? link.image : results.length;
+      const imageLink =
+        results.length === 1 ? link.image : results.length.toString();
 
       for (const result of results) {
         await updatePlayersById(
-          { imageLink },
+          { imageLink: imageLink.replace("/t_lazy", "") },
           { id: result.dataValues.id },
           PlayType.NFL
         );

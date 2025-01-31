@@ -4,6 +4,7 @@ import {
   deleteSetting,
   getSetting,
   updateDifficultyStatus,
+  updateImageLink,
 } from "../controller/adminController";
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.post("/:type", createOrUpdateSetting);
 router.delete("/:id/:type", deleteSetting);
 
 router.post("/difficulty/:type", updateDifficultyStatus);
+
+router.put("/image/:type", updateImageLink);
 
 export default router;

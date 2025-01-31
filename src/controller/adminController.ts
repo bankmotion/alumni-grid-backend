@@ -93,3 +93,23 @@ export const updateDifficultyStatus = async (req: Request, res: Response) => {
     res.status(500).json({ status: 500, message: "Failed to get setting" });
   }
 };
+
+export const updateImageLink = async (req: Request, res: Response) => {
+  try {
+    const { type } = req.params;
+    const { id, imageLink } = req.body;
+
+    if (typeof id !== "number" || typeof imageLink !== "string") {
+      res.status(400).json({ status: 400, error: "Invalid input data" });
+      return;
+    }
+
+    await updatePlayersById({ imageLink }, { id }, Number(type));
+    res.status(200).json("Updated successfully");
+  } catch (err) {
+    console.error(`adminController ~ updateImageLink() => ${err}`);
+    res
+      .status(500)
+      .json({ status: 500, message: "Failed to update image link" });
+  }
+};

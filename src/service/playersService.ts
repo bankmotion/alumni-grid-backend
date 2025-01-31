@@ -1,9 +1,10 @@
 import { Op } from "sequelize";
 import { ActiveStatus, Difficulty, PlayType } from "../config/constant";
-import NBAPlayer from "../models/NBAPlayers";
-import NFLPlayer from "../models/NFLPlayers";
+import NBAPlayer, { NBAPlayerAttributes } from "../models/NBAPlayers";
+import NFLPlayer, { NFLPlayerAttributes } from "../models/NFLPlayers";
 import { delay, getRandNumber } from "../utils/utils";
 import Setting from "../models/Setting";
+import { Sequelize } from "sequelize";
 
 export const getModelFromPlayType = (playType: PlayType) => {
   return playType === PlayType.NBA
@@ -225,4 +226,34 @@ export const updatePlayersById = async (
   } else if (type === PlayType.NFL) {
     await NFLPlayer.update(target, { where });
   }
+};
+
+export const getAllPlayerByName = async (name: string, type: PlayType) => {
+  let data: NBAPlayer[] | NFLPlayer[] = [];
+  if (type === PlayType.NBA) {
+    data = await NBAPlayer.findAll({
+      where: Sequelize.where(
+        Sequelize.fn(
+          "CONCAT",
+          Sequelize.col("firstName"),
+          " ",
+          Sequelize.col("lastName")
+        ),
+        name
+      ),
+    });
+  } else if (type === PlayType.NFL) {
+    data = await NFLPlayer.findAll({
+      where: Sequelize.where(
+        Sequelize.fn(
+          "CONCAT",
+          Sequelize.col("firstName"),
+          " ",
+          Sequelize.col("lastName")
+        ),
+        name
+      ),
+    });
+  }
+  return data;
 };

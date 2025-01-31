@@ -43,7 +43,7 @@ const start = async () => {
   try {
     let data = await getAllPlayerListByType(PlayType.NFL);
     if (!data) return;
-
+    console.log({ count: data.length });
     for (const dat of data) {
       if (!dat.dataValues.firstName || dat.dataValues.imageLink) continue;
       // const link = await getPlayerImageLink("dev");

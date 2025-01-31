@@ -17,7 +17,8 @@ const launchBrowser = async () => {
 };
 
 const getPlayerImageLink = async (firstName: string, page: Page) => {
-  const url = `https://www.nfl.com/players/active/all?query=${firstName}`;
+  // const url = `https://www.nfl.com/players/active/all?query=${firstName}`;
+  const url = `https://www.nfl.com/players/retired/all?query=${firstName}`;
   const results: { name: string; image: string }[] = [];
 
   await page.goto(url, { waitUntil: "load", timeout: 0 });

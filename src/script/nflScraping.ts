@@ -5,20 +5,23 @@ import {
   updatePlayersById,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";
-import puppeteer from "puppeteer-core";
+import puppeteer, { Page } from "puppeteer-core";
+import { delay } from "../utils/utils";
 
-const getPlayerImageLink = async (firstName: string) => {
-  const url = `https://www.nfl.com/players/active/all?query=${firstName}`;
-  const results: { name: string; image: string }[] = [];
-
-  const browser = await puppeteer.launch({
-    executablePath: "/usr/bin/chromium-browser", // Path to Chromium on Ubuntu
+const launchBrowser = async () => {
+  return await puppeteer.launch({
+    executablePath: "/usr/bin/chromium-browser",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
     userDataDir: "/var/www",
   });
-  const page = await browser.newPage();
+};
+
+const getPlayerImageLink = async (firstName: string, page: Page) => {
+  const url = `https://www.nfl.com/players/active/all?query=${firstName}`;
+  const results: { name: string; image: string }[] = [];
 
   await page.goto(url, { waitUntil: "load", timeout: 0 });
+  await delay(3000);
 
   const data = await page.evaluate(() => {
     const rows = Array.from(
@@ -34,20 +37,20 @@ const getPlayerImageLink = async (firstName: string) => {
   });
 
   results.push(...data);
-  await browser.close();
 
   return results;
 };
 
 const start = async () => {
+  const browser = await launchBrowser();
+  const page = await browser.newPage();
+
   try {
     let data = await getAllPlayerListByType(PlayType.NFL, true);
     if (!data || !data.length) return;
 
     console.log({ count: data.length });
     const dat = data[0];
-
-    // const link = await getPlayerImageLink("dev");
 
     await updatePlayersById(
       {
@@ -64,14 +67,17 @@ const start = async () => {
       return;
     }
 
-    const links = await getPlayerImageLink(dat.dataValues.firstName);
+    const links = await getPlayerImageLink(dat.dataValues.firstName, page);
     console.log({
       id: dat.dataValues.id,
       count: links.length,
     });
 
     for (const link of links) {
-      const results = await getAllPlayerByName(link.name, PlayType.NFL);
+      const results = await getAllPlayerByName(
+        link.name.slice(0, 3),
+        PlayType.NFL
+      );
       console.log(results.length, link.name, link.image);
       const imageLink = results.length === 1 ? link.image : results.length;
 

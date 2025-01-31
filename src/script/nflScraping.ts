@@ -12,9 +12,9 @@ const getPlayerImageLink = async (firstName: string) => {
   const results: { name: string; image: string }[] = [];
 
   const browser = await puppeteer.launch({
-    headless: false,
-    defaultViewport: null,
-    args: ["--start-maximize"],
+    // headless: false,
+    // defaultViewport: null,
+    // args: ["--start-maximize"],
   });
   const page = await browser.newPage();
 

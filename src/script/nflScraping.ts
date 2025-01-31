@@ -42,42 +42,49 @@ const getPlayerImageLink = async (firstName: string) => {
 const start = async () => {
   try {
     let data = await getAllPlayerListByType(PlayType.NFL, true);
-    if (!data) return;
+    if (!data || !data.length) return;
+
     console.log({ count: data.length });
-    for (const dat of data) {
-      if (!dat.dataValues.firstName) continue;
-      // const link = await getPlayerImageLink("dev");
+    const dat = data[0];
 
-      await updatePlayersById(
-        {
-          imageLink: 0,
-        },
-        { id: dat.dataValues.id },
-        PlayType.NFL
-      );
+    // const link = await getPlayerImageLink("dev");
 
-      const links = await getPlayerImageLink(dat.dataValues.firstName);
-      console.log({
-        id: dat.dataValues.id,
-        count: links.length,
-      });
+    await updatePlayersById(
+      {
+        imageLink: 0,
+      },
+      { id: dat.dataValues.id },
+      PlayType.NFL
+    );
 
-      for (const link of links) {
-        const results = await getAllPlayerByName(link.name, PlayType.NFL);
-        console.log(results.length, link.name, link.image);
-        const imageLink = results.length === 1 ? link.image : results.length;
-
-        for (const result of results) {
-          await updatePlayersById(
-            { imageLink },
-            { id: result.dataValues.id },
-            PlayType.NFL
-          );
-        }
-      }
-
-      data = await getAllPlayerListByType(PlayType.NFL, true);
+    if (!dat.dataValues.firstName) {
+      setTimeout(() => {
+        start();
+      }, 10000);
+      return;
     }
+
+    const links = await getPlayerImageLink(dat.dataValues.firstName);
+    console.log({
+      id: dat.dataValues.id,
+      count: links.length,
+    });
+
+    for (const link of links) {
+      const results = await getAllPlayerByName(link.name, PlayType.NFL);
+      console.log(results.length, link.name, link.image);
+      const imageLink = results.length === 1 ? link.image : results.length;
+
+      for (const result of results) {
+        await updatePlayersById(
+          { imageLink },
+          { id: result.dataValues.id },
+          PlayType.NFL
+        );
+      }
+    }
+
+    start();
   } catch (err) {
     setTimeout(() => {
       start();

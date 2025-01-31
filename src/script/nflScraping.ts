@@ -21,7 +21,6 @@ const getPlayerImageLink = async (firstName: string, page: Page) => {
   const results: { name: string; image: string }[] = [];
 
   await page.goto(url, { waitUntil: "load", timeout: 0 });
-  await delay(7);
 
   const data = await page.evaluate(() => {
     const rows = Array.from(
@@ -31,7 +30,7 @@ const getPlayerImageLink = async (firstName: string, page: Page) => {
       const name =
         row.querySelector("td a.d3-o-player-fullname")?.textContent?.trim() ||
         "";
-      const image = row.querySelector("td img")?.getAttribute("src") || "";
+      const image = row.querySelector("td img.img-responsive")?.getAttribute("src") || "";
       return { name, image };
     });
   });

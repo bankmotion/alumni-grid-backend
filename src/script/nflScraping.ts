@@ -14,6 +14,7 @@ const getPlayerImageLink = async (firstName: string) => {
   const browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser", // Path to Chromium on Ubuntu
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    userDataDir: "/var/www",
   });
   const page = await browser.newPage();
 

@@ -21,7 +21,7 @@ const getPlayerImageLink = async (firstName: string, page: Page) => {
   const results: { name: string; image: string }[] = [];
 
   await page.goto(url, { waitUntil: "load", timeout: 0 });
-  await delay(3);
+  await delay(7);
 
   const data = await page.evaluate(() => {
     const rows = Array.from(

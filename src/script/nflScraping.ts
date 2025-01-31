@@ -45,7 +45,7 @@ const start = async () => {
     if (!data) return;
     console.log({ count: data.length });
     for (const dat of data) {
-      if (!dat.dataValues.firstName || dat.dataValues.imageLink) continue;
+      if (!dat.dataValues.firstName) continue;
       // const link = await getPlayerImageLink("dev");
 
       await updatePlayersById(

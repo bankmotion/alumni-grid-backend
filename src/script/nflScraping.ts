@@ -47,9 +47,16 @@ const start = async () => {
     for (const dat of data) {
       if (!dat.dataValues.firstName || dat.dataValues.imageLink) continue;
       // const link = await getPlayerImageLink("dev");
-      const links = await getPlayerImageLink(
-        dat.dataValues.firstName.slice(0, 3)
+
+      await updatePlayersById(
+        {
+          imageLink: 0,
+        },
+        { id: dat.dataValues.id },
+        PlayType.NFL
       );
+
+      const links = await getPlayerImageLink(dat.dataValues.firstName);
       console.log({
         id: dat.dataValues.id,
         count: links.length,

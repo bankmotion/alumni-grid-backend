@@ -41,7 +41,7 @@ const getPlayerImageLink = async (firstName: string) => {
 
 const start = async () => {
   try {
-    let data = await getAllPlayerListByType(PlayType.NFL);
+    let data = await getAllPlayerListByType(PlayType.NFL, true);
     if (!data) return;
     console.log({ count: data.length });
     for (const dat of data) {
@@ -69,7 +69,7 @@ const start = async () => {
         }
       }
 
-      data = await getAllPlayerListByType(PlayType.NFL);
+      data = await getAllPlayerListByType(PlayType.NFL, true);
     }
   } catch (err) {
     setTimeout(() => {

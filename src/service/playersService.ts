@@ -89,7 +89,10 @@ export const getPlayerDataByID = async (id: number, type: PlayType) => {
   return null;
 };
 
-export const getAllPlayerListByType = async (type: PlayType) => {
+export const getAllPlayerListByType = async (
+  type: PlayType,
+  imageNullStatus: boolean = false
+) => {
   const model = getModelFromPlayType(type);
 
   if (model) {
@@ -104,6 +107,7 @@ export const getAllPlayerListByType = async (type: PlayType) => {
         college: {
           [Op.not]: null as any,
         },
+        imageLink: imageNullStatus ? (null as any) : undefined,
       },
     });
 

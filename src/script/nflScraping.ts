@@ -5,7 +5,7 @@ import {
   updatePlayersById,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";
-import puppeteer, { Page } from "puppeteer-core";
+import puppeteer, { Browser, Page } from "puppeteer-core";
 import { delay } from "../utils/utils";
 
 const launchBrowser = async () => {
@@ -41,9 +41,14 @@ const getPlayerImageLink = async (firstName: string, page: Page) => {
   return results;
 };
 
-const start = async () => {
-  const browser = await launchBrowser();
-  const page = await browser.newPage();
+let browser: Browser;
+let page: Page;
+
+const start = async (status: boolean = false) => {
+  if (status) {
+    browser = await launchBrowser();
+    page = await browser.newPage();
+  }
 
   try {
     let data = await getAllPlayerListByType(PlayType.NFL, true);
@@ -67,17 +72,17 @@ const start = async () => {
       return;
     }
 
-    const links = await getPlayerImageLink(dat.dataValues.firstName, page);
+    const links = await getPlayerImageLink(
+      dat.dataValues.firstName.slice(0, 3),
+      page
+    );
     console.log({
       id: dat.dataValues.id,
       count: links.length,
     });
 
     for (const link of links) {
-      const results = await getAllPlayerByName(
-        link.name.slice(0, 3),
-        PlayType.NFL
-      );
+      const results = await getAllPlayerByName(link.name, PlayType.NFL);
       console.log(results.length, link.name, link.image);
       const imageLink = results.length === 1 ? link.image : results.length;
 
@@ -99,4 +104,4 @@ const start = async () => {
   }
 };
 
-start();
+start(true);

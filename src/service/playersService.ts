@@ -96,19 +96,24 @@ export const getAllPlayerListByType = async (
   const model = getModelFromPlayType(type);
 
   if (model) {
-    const data = await model.findAll({
-      where: {
-        firstName: {
-          [Op.not]: null as any,
-        },
-        lastName: {
-          [Op.not]: null as any,
-        },
-        college: {
-          [Op.not]: null as any,
-        },
-        imageLink: imageNullStatus ? (null as any) : undefined,
+    const whereCondition: any = {
+      firstName: {
+        [Op.not]: null as any,
       },
+      lastName: {
+        [Op.not]: null as any,
+      },
+      college: {
+        [Op.not]: null as any,
+      },
+    };
+
+    if (imageNullStatus) {
+      whereCondition.imageLink = { [Op.is]: null };
+    }
+
+    const data = await model.findAll({
+      where: whereCondition,
     });
 
     return data;

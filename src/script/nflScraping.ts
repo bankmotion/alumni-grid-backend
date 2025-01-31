@@ -5,7 +5,7 @@ import {
   updatePlayersById,
 } from "../service/playersService";
 import { PlayType } from "../config/constant";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 
 const getPlayerImageLink = async (firstName: string) => {
   const url = `https://www.nfl.com/players/active/all?query=${firstName}`;

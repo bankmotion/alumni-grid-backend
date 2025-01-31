@@ -86,6 +86,7 @@ const start = async () => {
 
     start();
   } catch (err) {
+    console.error(err);
     setTimeout(() => {
       start();
     }, 10000);

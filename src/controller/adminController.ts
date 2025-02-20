@@ -97,14 +97,14 @@ export const updateDifficultyStatus = async (req: Request, res: Response) => {
 export const updateImageLink = async (req: Request, res: Response) => {
   try {
     const { type } = req.params;
-    const { id, imageLink } = req.body;
+    const { id, imageLink, college } = req.body;
 
     if (typeof id !== "number" || typeof imageLink !== "string") {
       res.status(400).json({ status: 400, error: "Invalid input data" });
       return;
     }
 
-    await updatePlayersById({ imageLink }, { id }, Number(type));
+    await updatePlayersById({ imageLink, college }, { id }, Number(type));
     res.status(200).json("Updated successfully");
   } catch (err) {
     console.error(`adminController ~ updateImageLink() => ${err}`);

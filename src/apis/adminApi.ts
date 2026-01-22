@@ -1,22 +1,30 @@
-import express from "express";
+import express from "express"
 import {
   createOrUpdateSetting,
+  csvUploadNBA,
+  csvUploadNFL,
   deleteSetting,
   getSetting,
   updateDifficultyStatus,
   updateImageLink,
-} from "../controller/adminController";
+} from "../controller/adminController"
+import multer from "multer"
 
-const router = express.Router();
+const router = express.Router()
+const upload = multer({ dest: "uploads/" })
 
-router.get("/:type", getSetting);
+router.get("/:type", getSetting)
 
-router.post("/:type", createOrUpdateSetting);
+router.post("/game/csvUploadNBA", upload.single("file"), csvUploadNBA)
 
-router.delete("/:id/:type", deleteSetting);
+router.post("/game/csvUploadNFL", upload.single("file"), csvUploadNFL)
 
-router.post("/difficulty/:type", updateDifficultyStatus);
+router.post("/:type", createOrUpdateSetting)
 
-router.put("/image/:type", updateImageLink);
+router.delete("/:id/:type", deleteSetting)
 
-export default router;
+router.post("/difficulty/:type", updateDifficultyStatus)
+
+router.put("/image/:type", updateImageLink)
+
+export default router
